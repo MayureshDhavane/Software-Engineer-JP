@@ -23,6 +23,9 @@ public class TaskThreeTests {
     @Autowired
     private FileLoader fileLoader;
 
+    @Autowired
+    private com.jpmc.midascore.component.DatabaseConduit databaseConduit;
+
     @Test
     void task_three_verifier() throws InterruptedException {
         userPopulator.populate();
@@ -32,6 +35,7 @@ public class TaskThreeTests {
         }
         Thread.sleep(2000);
 
+        com.jpmc.midascore.entity.UserRecord waldorf = databaseConduit.findUserById(7);
 
         logger.info("----------------------------------------------------------");
         logger.info("----------------------------------------------------------");
