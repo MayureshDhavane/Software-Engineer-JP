@@ -2,6 +2,8 @@ package com.jpmc.midascore.entity;
 
 import jakarta.persistence.*;
 
+// This is a User Record
+
 @Entity
 public class UserRecord {
 
