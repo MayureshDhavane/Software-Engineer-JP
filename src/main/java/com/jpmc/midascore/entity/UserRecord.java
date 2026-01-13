@@ -15,9 +15,11 @@ public class UserRecord {
     @Column(nullable = false)
     private float balance;
 
+    // Default constructor required by JPA
     protected UserRecord() {
     }
 
+    // Constructor to initialize all fields except id
     public UserRecord(String name, float balance) {
         this.name = name;
         this.balance = balance;

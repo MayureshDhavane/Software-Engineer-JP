@@ -1,0 +1,29 @@
+# Name of the Kakfa topic
+general:
+  kafka-topic: midas.transactions
+
+
+spring:
+  # Kafka Producer and Consumer Setup
+  kafka:
+    consumer:
+      group-id: midas-core
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+  # H2 Database Setup
+  datasource:
+    url: jdbc:h2:mem:midasdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
