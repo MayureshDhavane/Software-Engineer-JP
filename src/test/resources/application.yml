@@ -1,0 +1,29 @@
+server:
+  port: 33400
+
+general:
+  kafka-topic: trader-updates
+
+spring:
+  kafka:
+    consumer:
+      group-id: midas-core-group
+      auto-offset-reset: earliest
+      value-deserializer: org.springframework.kafka.support.serialization.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "com.jpmc.midascore.*"
+    producer:
+      value-serializer: org.springframework.kafka.support.serialization.JsonSerializer
+
+  datasource:
+    url: jdbc:h2:mem:midas;NON_KEYWORDS=USER
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+  h2:
+    console:
+      enabled: true
