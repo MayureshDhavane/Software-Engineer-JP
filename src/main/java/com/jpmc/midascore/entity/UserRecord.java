@@ -1,12 +1,14 @@
 package com.jpmc.midascore.entity;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class UserRecord {
 
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(nullable = false)
@@ -14,6 +16,12 @@ public class UserRecord {
 
     @Column(nullable = false)
     private float balance;
+
+    @OneToMany(mappedBy = "sender")
+    private List<TransactionRecord> sentTransactions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "recipient")
+    private List<TransactionRecord> receivedTransactions = new ArrayList<>();
 
     protected UserRecord() {
     }
@@ -25,9 +33,10 @@ public class UserRecord {
 
     @Override
     public String toString() {
-        return String.format("User[id=%d, name='%s', balance='%f'", id, name, balance);
+        return String.format("User[id=%d, name='%s', balance='%f']", id, name, balance);
     }
 
+    // Getters and setters
     public Long getId() {
         return id;
     }
@@ -42,5 +51,21 @@ public class UserRecord {
 
     public void setBalance(float balance) {
         this.balance = balance;
+    }
+
+    public List<TransactionRecord> getSentTransactions() {
+        return sentTransactions;
+    }
+
+    public void setSentTransactions(List<TransactionRecord> sentTransactions) {
+        this.sentTransactions = sentTransactions;
+    }
+
+    public List<TransactionRecord> getReceivedTransactions() {
+        return receivedTransactions;
+    }
+
+    public void setReceivedTransactions(List<TransactionRecord> receivedTransactions) {
+        this.receivedTransactions = receivedTransactions;
     }
 }
