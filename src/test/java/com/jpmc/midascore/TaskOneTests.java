@@ -23,7 +23,6 @@ class TaskOneTests {
         }
         output.append("\n").append("---end output ---");
         logger.info(output.toString());
-
     }
 
 }
