@@ -1,3 +1,6 @@
+server:
+  port: 33400
+
 general:
   kafka-topic: trader-updates
 
@@ -11,4 +14,19 @@ spring:
         spring.json.value.default.type: com.jpmc.midascore.foundation.Transaction
     producer:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-      
+  
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+  
+  h2:
+    console:
+      enabled: true
