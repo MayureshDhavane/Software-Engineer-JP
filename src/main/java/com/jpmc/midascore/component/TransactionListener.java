@@ -3,13 +3,11 @@ package com.jpmc.midascore.component;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-import com.jpmc.midascore.foundation.Transaction;
-import com.jpmc.midascore.entity.User;
 import com.jpmc.midascore.entity.TransactionRecord;
-import com.jpmc.midascore.repository.UserRepository;
+import com.jpmc.midascore.entity.UserRecord;
+import com.jpmc.midascore.foundation.Transaction;
 import com.jpmc.midascore.repository.TransactionRecordRepository;
-
-import java.util.Optional;
+import com.jpmc.midascore.repository.UserRepository;
 
 @Component
 public class TransactionListener {
@@ -23,18 +21,15 @@ public class TransactionListener {
         this.transactionRecordRepository = transactionRecordRepository;
     }
 
-    @KafkaListener(topics = "${general.kafka-topic}")
+    @KafkaListener(topics = "${general.kafka-topic}", groupId = "midas-core-group")
     public void listen(Transaction transaction) {
 
-        Optional<User> senderOpt = userRepository.findById(transaction.getSenderId());
-        Optional<User> recipientOpt = userRepository.findById(transaction.getRecipientId());
+        UserRecord sender = userRepository.findById(transaction.getSenderId());
+        UserRecord recipient = userRepository.findById(transaction.getRecipientId());
 
-        if(senderOpt.isPresent() && recipientOpt.isPresent()) {
+        if (sender != null && recipient != null) {
 
-            User sender = senderOpt.get();
-            User recipient = recipientOpt.get();
-
-            if(sender.getBalance() >= transaction.getAmount()) {
+            if (sender.getBalance() >= transaction.getAmount()) {
 
                 sender.setBalance(sender.getBalance() - transaction.getAmount());
                 recipient.setBalance(recipient.getBalance() + transaction.getAmount());
@@ -50,5 +45,11 @@ public class TransactionListener {
                 transactionRecordRepository.save(record);
             }
         }
+
+        userRepository.findAll().forEach(user -> {
+            if (user.getName().equals("waldorf")) {
+                System.out.println("Waldorf final balance: " + user.getBalance());
+            }
+        });
     }
 }

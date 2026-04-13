@@ -1,6 +1,10 @@
 package com.jpmc.midascore.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class TransactionRecord {
@@ -12,10 +16,10 @@ public class TransactionRecord {
     private float amount;
 
     @ManyToOne
-    private User sender;
+    private UserRecord sender;
 
     @ManyToOne
-    private User recipient;
+    private UserRecord recipient;
 
     public Long getId() {
         return id;
@@ -29,19 +33,19 @@ public class TransactionRecord {
         this.amount = amount;
     }
 
-    public User getSender() {
+    public UserRecord getSender() {
         return sender;
     }
 
-    public void setSender(User sender) {
+    public void setSender(UserRecord sender) {
         this.sender = sender;
     }
 
-    public User getRecipient() {
+    public UserRecord getRecipient() {
         return recipient;
     }
 
-    public void setRecipient(User recipient) {
+    public void setRecipient(UserRecord recipient) {
         this.recipient = recipient;
     }
 }
