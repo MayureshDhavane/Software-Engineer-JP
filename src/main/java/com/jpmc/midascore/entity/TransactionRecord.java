@@ -21,6 +21,8 @@ public class TransactionRecord {
     @ManyToOne
     private UserRecord recipient;
 
+    private float incentive;
+
     public Long getId() {
         return id;
     }
@@ -47,5 +49,13 @@ public class TransactionRecord {
 
     public void setRecipient(UserRecord recipient) {
         this.recipient = recipient;
+    }
+
+    public float getIncentive() {
+        return incentive;
+    }
+
+    public void setIncentive(float incentive) {
+        this.incentive = incentive;
     }
 }
